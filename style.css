@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+.btn {
+  padding: 12px 18px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.yes {
+  background: hotpink;
+  color: white;
+}
+
+.no {
+  background: black;
+  color: white;
+  position: absolute;
+}
+
+.play-area {
+  position: relative;
+  height: 70px;
+  margin-top: 15px;
+  border: 2px dashed gray;
+  border-radius: 12px;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.gif {
+  width: 100%;
+  border-radius: 15px;
+}
