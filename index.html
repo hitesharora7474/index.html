@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine?</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <!-- Screen 1 -->
+    <section class="screen active" id="screen-ask">
+      <h1>Hi, Tanisha 💖</h1>
+      <p class="subtitle">Will you be my Valentine?</p>
+
+      <div class="btn-row">
+        <button class="btn yes" id="yesBtn">Yes ✅</button>
+
+        <div class="play-area" id="playArea">
+          <button class="btn no" id="noBtn">No ❌</button>
+        </div>
+      </div>
+
+      <p class="hint" id="hintText">Choose wisely 😌</p>
+    </section>
+
+    <!-- Screen 2 -->
+    <section class="screen" id="screen-yes">
+      <h1>YAYYYY!!! 🐶💘</h1>
+      <p class="subtitle">Best decision you made today.</p>
+
+      <img
+        class="gif"
+        src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+        alt="Cute dog gif"
+      />
+
+      <button class="btn yes" id="nextBtn">Next 👉</button>
+    </section>
+
+    <!-- Screen 3 -->
+    <section class="screen" id="screen-final">
+      <h1>It’s a date 💝</h1>
+      <p class="subtitle">Tanish, you will be picked up at 12:00 AM 😉</p>
+
+      <button class="btn ghost" id="restartBtn">Replay 🔁</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
