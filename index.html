@@ -2,51 +2,540 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valentine?</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Now that you've said yes…</title>
+  <style>
+    :root{
+      --bg1:#fff7fb;
+      --bg2:#ffffff;
+      --ink:#1b1b1b;
+      --muted:#6b6b6b;
+      --pink:#ff4d8d;
+      --pink2:#ff7bb0;
+      --card:#ffffff;
+      --line:rgba(0,0,0,.08);
+      --shadow:0 18px 40px rgba(0,0,0,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(255,77,141,.14), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,123,176,.16), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding: 12px 0 22px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.7);
+      backdrop-filter: blur(8px);
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--pink));
+      box-shadow:0 0 0 4px rgba(255,77,141,.18);
+    }
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .hero{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(800px 300px at 20% 0%, rgba(255,77,141,.18), transparent 60%),
+                  radial-gradient(700px 260px at 80% 10%, rgba(255,123,176,.20), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      padding: 34px 26px;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size: 16px;
+      line-height:1.6;
+      max-width: 68ch;
+    }
+    .names{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin: 16px 0 18px;
+    }
+    .namechip{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 12px;
+      background:#fff;
+      font-weight:700;
+    }
+    .namechip span{
+      font-weight:600;
+      color:var(--muted);
+      margin-right:6px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 14px 32px rgba(0,0,0,.08);
+      padding: 18px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing:-.2px;
+    }
+    .muted{color:var(--muted)}
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:14px 0;
+    }
+
+    .invite{
+      border:1px dashed rgba(255,77,141,.45);
+      border-radius: 18px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255,77,141,.08), rgba(255,123,176,.06));
+    }
+    .invite b{color:var(--pink)}
+    .timeline{
+      list-style:none;
+      margin:10px 0 0;
+      padding:0;
+      display:grid;
+      gap:10px;
+    }
+    .step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding: 12px;
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background:#fff;
+    }
+    .icon{
+      width:34px;height:34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,77,141,.26));
+      border:1px solid rgba(255,77,141,.18);
+      flex:0 0 auto;
+      font-size: 18px;
+    }
+    .step b{display:block}
+    .step small{color:var(--muted); display:block; margin-top:2px}
+
+    .count{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .countbox{
+      flex:1 1 150px;
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background:#fff;
+    }
+    .countbox .label{color:var(--muted); font-weight:600; font-size:12px}
+    .countbox .val{font-size: 22px; font-weight:800; margin-top:6px}
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    button{
+      border:0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .06s ease, filter .2s ease;
+    }
+    button:active{transform: translateY(1px)}
+    .yes{
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      color:white;
+      box-shadow: 0 12px 28px rgba(255,77,141,.28);
+    }
+    .ghost{
+      background: rgba(255,255,255,.7);
+      border:1px solid var(--line);
+      color: var(--muted);
+      cursor:not-allowed;
+      opacity:.7;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: rgba(27,27,27,.92);
+      color:white;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight:700;
+      box-shadow: 0 16px 36px rgba(0,0,0,.25);
+      display:none;
+      max-width: min(92vw, 560px);
+      text-align:center;
+      z-index: 50;
+    }
+
+    .reveal{
+      margin-top: 12px;
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background:#fff;
+      padding: 14px;
+    }
+    .revealrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:10px;
+    }
+    input{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 12px;
+      font-weight:700;
+      width: min(320px, 100%);
+      outline: none;
+    }
+    .unlock{
+      background: rgba(255,77,141,.12);
+      color: var(--pink);
+      border:1px solid rgba(255,77,141,.28);
+    }
+    .secret{
+      display:none;
+      margin-top:12px;
+      padding:14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,77,141,.25);
+      background: linear-gradient(180deg, rgba(255,77,141,.08), rgba(255,123,176,.06));
+    }
+    .footer{
+      margin-top: 16px;
+      text-align:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .spark{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.45;
+      mask-image: radial-gradient(420px 240px at 50% 0%, #000 45%, transparent 80%);
+    }
+    .spark span{
+      position:absolute;
+      width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,77,141,.9));
+      filter: blur(.2px);
+      animation: float 7s ease-in-out infinite;
+      opacity:.45;
+    }
+    @keyframes float{
+      0%,100%{transform: translateY(0)}
+      50%{transform: translateY(-14px)}
+    }
+  </style>
 </head>
 <body>
-  <main class="card">
-    <!-- Screen 1 -->
-    <section class="screen active" id="screen-ask">
-      <h1>Hi, Tanisha 💖</h1>
-      <p class="subtitle">Will you be my Valentine?</p>
+  <div class="wrap">
 
-      <div class="btn-row">
-        <button class="btn yes" id="yesBtn">Yes ✅</button>
+    <div class="topbar">
+      <div class="badge"><span class="dot"></span> Valentine Protocol</div>
+      <div class="pill">Pink + White • Cute mode</div>
+    </div>
 
-        <div class="play-area" id="playArea">
-          <button class="btn no" id="noBtn">No ❌</button>
-        </div>
+    <section class="hero">
+      <div class="spark" aria-hidden="true">
+        <span style="left:10%; top:28%; animation-delay:0s"></span>
+        <span style="left:22%; top:18%; animation-delay:1s"></span>
+        <span style="left:46%; top:26%; animation-delay:2s"></span>
+        <span style="left:70%; top:20%; animation-delay:1.4s"></span>
+        <span style="left:86%; top:30%; animation-delay:.6s"></span>
       </div>
 
-      <p class="hint" id="hintText">Choose wisely 😌</p>
+      <div class="hero-inner">
+        <h1>Now that you've said yes, there is no backing out, beautiful.</h1>
+        <p class="sub">
+          A tiny website. A big plan. One very obvious outcome.
+          <span class="muted">(Spoiler: it’s us, being cute.)</span>
+        </p>
+
+        <div class="names">
+          <div class="namechip"><span>For:</span> Tanisha</div>
+          <div class="namechip"><span>From:</span> Hitesh</div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h2>💌 The Invite</h2>
+            <div class="invite">
+              <div><b>Dress code:</b> whatever makes you feel unreal.</div>
+              <div><b>Cuisine:</b> Italian / Asian (your call)</div>
+              <div><b>Alcohol:</b> Yes (optional)</div>
+              <div><b>Vibe:</b> romantic, not loud, lots of “us” time</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2>🗓️ The Plan (cute & simple)</h2>
+            <ul class="timeline">
+              <li class="step">
+                <div class="icon">☕</div>
+                <div>
+                  <b>Coffee</b>
+                  <small>Warm-up + gossip + “how pretty are you?”</small>
+                </div>
+              </li>
+              <li class="step">
+                <div class="icon">🍝</div>
+                <div>
+                  <b>Dinner</b>
+                  <small>One table. Two idiots. Many smiles.</small>
+                </div>
+              </li>
+              <li class="step">
+                <div class="icon">🍰</div>
+                <div>
+                  <b>Dessert</b>
+                  <small>Sweet ending. Dramatic compliments.</small>
+                </div>
+              </li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <h2>🎁 Gifts</h2>
+            <p class="muted">There’s a “surprise reveal” button. It’s fake. But the surprise isn’t. 🙂</p>
+            <div class="actions">
+              <button class="ghost" title="This button is intentionally fake">Reveal Surprise (fake)</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>⏳ Countdown</h2>
+            <p class="muted">Until the date begins. Yes, I’m making it official.</p>
+            <div class="count">
+              <div class="countbox">
+                <div class="label">DAYS</div>
+                <div class="val" id="d">--</div>
+              </div>
+              <div class="countbox">
+                <div class="label">HOURS</div>
+                <div class="val" id="h">--</div>
+              </div>
+              <div class="countbox">
+                <div class="label">MINS</div>
+                <div class="val" id="m">--</div>
+              </div>
+              <div class="countbox">
+                <div class="label">SECS</div>
+                <div class="val" id="s">--</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2>✅ RSVP</h2>
+            <p class="muted">Only one of these works. You already know which one.</p>
+            <div class="actions">
+              <button class="yes" id="yesBtn">YES 💗</button>
+              <button class="ghost" title="Nope. Not clickable on purpose.">No</button>
+              <button class="ghost" title="Nope. Not clickable on purpose.">Maybe</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <h2>🔐 Secret Message</h2>
+            <p class="muted">Easy unlock. No pressure. But also… do it.</p>
+
+            <div class="reveal">
+              <div class="muted"><b>Hint:</b> What do you call me sometimes?</div>
+              <div class="revealrow">
+                <input id="code" placeholder="Type the secret code…" />
+                <button class="unlock" id="unlockBtn">Unlock</button>
+              </div>
+              <div class="secret" id="secretBox">
+                <b>Okay listen.</b><br/><br/>
+                You make life feel lighter. Like the world slows down a bit when you’re around.
+                I don’t need “perfect” plans — I just need <i>you</i> in them.
+                <br/><br/>
+                So yeah… this isn’t just a date. It’s my favourite person + my favourite vibe.
+                <br/><br/>
+                <b>Happy Valentine’s, Tanisha. 💗</b>
+              </div>
+            </div>
+
+            <div class="footer">Made with slightly embarrassing levels of affection.</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Screen 2 -->
-    <section class="screen" id="screen-yes">
-      <h1>YAYYYY!!! 🐶💘</h1>
-      <p class="subtitle">Best decision you made today.</p>
+  </div>
 
-      <img
-        class="gif"
-        src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
-        alt="Cute dog gif"
-      />
+  <div class="toast" id="toast"></div>
 
-      <button class="btn yes" id="nextBtn">Next 👉</button>
-    </section>
+  <script>
+    // Set your date/time here (local time)
+    // Example: Feb 14, 2026 at 7:30 PM
+    const target = new Date("2026-02-14T19:30:00");
 
-    <!-- Screen 3 -->
-    <section class="screen" id="screen-final">
-      <h1>It’s a date 💝</h1>
-      <p class="subtitle">Tanish, you will be picked up at 12:00 AM 😉</p>
+    const elD = document.getElementById("d");
+    const elH = document.getElementById("h");
+    const elM = document.getElementById("m");
+    const elS = document.getElementById("s");
 
-      <button class="btn ghost" id="restartBtn">Replay 🔁</button>
-    </section>
-  </main>
+    function pad(n){ return String(n).padStart(2,"0"); }
 
-  <script src="script.js"></script>
+    function tick(){
+      const now = new Date();
+      let diff = target - now;
+
+      if(diff < 0) diff = 0;
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hrs  = Math.floor((diff / (1000*60*60)) % 24);
+      const mins = Math.floor((diff / (1000*60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      elD.textContent = pad(days);
+      elH.textContent = pad(hrs);
+      elM.textContent = pad(mins);
+      elS.textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // Toast helper
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> toast.style.display="none", 2600);
+    }
+
+    // RSVP YES
+    document.getElementById("yesBtn").addEventListener("click", ()=>{
+      showToast("Locked in. No refunds. No cancellations. See you, Valentine. 💗");
+      confettiBurst();
+    });
+
+    // Secret unlock
+    const SECRET = ["beautiful","babe","baby","jaan","cutie"]; // add/remove codes here
+    document.getElementById("unlockBtn").addEventListener("click", ()=>{
+      const val = (document.getElementById("code").value || "").trim().toLowerCase();
+      if(SECRET.includes(val)){
+        document.getElementById("secretBox").style.display = "block";
+        showToast("Unlocked. (Of course you knew it.) 💘");
+        confettiBurst();
+      } else {
+        showToast("Nope. Try again 😌 (hint is above)");
+      }
+    });
+
+    // Tiny confetti (no images)
+    function confettiBurst(){
+      const colors = ["#ff4d8d","#ff7bb0","#ffd6e6","#ffffff"];
+      for(let i=0;i<60;i++){
+        const p = document.createElement("span");
+        p.style.position="fixed";
+        p.style.left = (window.innerWidth/2 + (Math.random()*180-90))+"px";
+        p.style.top  = (window.innerHeight*0.75)+"px";
+        p.style.width="8px";
+        p.style.height="8px";
+        p.style.borderRadius="2px";
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        p.style.opacity="0.95";
+        p.style.zIndex="999";
+        document.body.appendChild(p);
+
+        const dx = (Math.random()*2-1)*260;
+        const dy = - (180 + Math.random()*220);
+        const rot = (Math.random()*720-360);
+
+        p.animate([
+          { transform:`translate(0,0) rotate(0deg)`, opacity:1 },
+          { transform:`translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity:1, offset:.6 },
+          { transform:`translate(${dx*1.1}px, ${dy*0.2}px) rotate(${rot*1.2}deg)`, opacity:0 }
+        ], { duration: 1200 + Math.random()*600, easing:"cubic-bezier(.2,.8,.2,1)" });
+
+        setTimeout(()=> p.remove(), 1800);
+      }
+    }
+  </script>
 </body>
 </html>
